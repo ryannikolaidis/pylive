@@ -80,7 +80,7 @@ class Query:
         target = self.osc_server.serve_forever
 
         self.osc_server_thread = threading.Thread(target=target)
-        self.osc_server_thread.setDaemon(True)
+        self.osc_server_thread.daemon = True
         self.osc_server_thread.start()
 
     def stop(self):

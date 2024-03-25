@@ -234,7 +234,11 @@ class Track:
                            doc="Color index (0..69)")
 
     def get_send(self, send_index: int):
-        return self.live.query("/live/track/get/send", (self.index, send_index))[1]
+        value_index = 1
+        if Query().query("/live/application/get/version")[0] >= 12:
+            value_index = 2
+        return self.live.query("/live/track/get/send", (self.index, send_index))[value_index]
+
 
     def set_send(self, send_index: int, value: float):
         self.live.cmd("/live/track/set/send", (self.index, send_index, value))
