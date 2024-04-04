@@ -97,6 +97,18 @@ class Clip:
         self.live.cmd("/live/clip/stop", (self.track.index, self.index))
         self.track.playing = False
 
+    @property
+    def notes(self) -> list[tuple[int, float, float, int, bool]]:
+        """
+        Return all notes in the clip.
+        """
+        response: list[int] = self.live.query("/live/clip/get/notes", (self.track.index, self.index))
+        # seems like first two values in response are track and clip index
+        # the rest are notes in the form of: (pitch, start_time, duration, velocity, mute)
+        # but we want to return them as tuples
+        # so we slice the response into chunks of 5 and return them as tuples
+        return [tuple(response[2:][i:i + 5]) for i in range(0, len(response[2:]), 5)]
+
     def add_note(self,
                  pitch: int,
                  start_time: float,

@@ -668,6 +668,19 @@ class Set:
         self.live.cmd("/live/redo")
 
     # --------------------------------------------------------------------------------
+    # Clips
+    # --------------------------------------------------------------------------------
+
+    def get_highlighted_clip(self) -> Optional[Clip]:
+        """
+        Returns the currently highlighted clip, or None if no clip is highlighted.
+        """
+        track_index, clip_index = self.live.query("/live/view/get/selected_clip")
+        clip = self.tracks[track_index].clips[clip_index]
+        return clip
+
+
+    # --------------------------------------------------------------------------------
     # Tracks
     # --------------------------------------------------------------------------------
 
