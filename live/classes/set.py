@@ -675,6 +675,8 @@ class Set:
         """
         Returns the currently highlighted clip, or None if no clip is highlighted.
         """
+        response = self.live.query("/live/view/detail_clip/get/notes")
+        print(f"response from detail_clip: {response}")
         track_index, clip_index = self.live.query("/live/view/get/selected_clip")
         clip = self.tracks[track_index].clips[clip_index]
         return clip

@@ -16,6 +16,18 @@ def make_setter(class_identifier, prop):
         self.live.cmd("/live/%s/set/%s" % (class_identifier, prop), (self.track.index, self.index, value))
 
     return fn
+from dataclasses import dataclass
+
+@dataclass
+class ClipDetails:
+    name: str
+    length: int
+    signature_numerator: int
+    signature_denominator: int
+    start_time: float
+    end_time: float
+    loop_start: float
+    loop_end: float
 
 class Clip:
     """
@@ -98,16 +110,30 @@ class Clip:
         self.track.playing = False
 
     @property
+    def details(self) -> ClipDetails:
+        """
+        Return details of the clip.
+        """
+        details_tuple = self.live.query("/live/clip/get/details", (self.track.index, self.index))
+        return ClipDetails(*details_tuple[2:])
+
+    @property
     def notes(self) -> list[tuple[int, float, float, int, bool]]:
         """
         Return all notes in the clip.
         """
         response: list[int] = self.live.query("/live/clip/get/notes", (self.track.index, self.index))
-        # seems like first two values in response are track and clip index
+        # first two values in response are track and clip index
         # the rest are notes in the form of: (pitch, start_time, duration, velocity, mute)
         # but we want to return them as tuples
         # so we slice the response into chunks of 5 and return them as tuples
         return [tuple(response[2:][i:i + 5]) for i in range(0, len(response[2:]), 5)]
+
+    def remove_notes(self) -> None:
+        """
+        Clear all notes in the clip.
+        """        
+        self.live.cmd("/live/clip/remove/notes", (self.track.index, self.index))
 
     def add_note(self,
                  pitch: int,
