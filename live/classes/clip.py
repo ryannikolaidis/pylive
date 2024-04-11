@@ -153,9 +153,11 @@ class Clip:
         """
         self.live.cmd("/live/clip/add/notes", (self.track.index, self.index, pitch, start_time, duration, velocity, mute))
 
-    name = property(fget=make_getter("clip", "name"),
-                    fset=make_setter("clip", "name"),
-                    doc="Name of the clip")
+    def set_name(self, name: str) -> None:
+        """
+        Set the name of the clip.
+        """
+        self.live.cmd("/live/clip/set/name", (self.track.index, self.index, name))
 
     signature_numerator = property(fget=make_getter("clip", "signature_numerator"),
                                    fset=make_setter("clip", "signature_numerator"),
