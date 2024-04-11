@@ -6,7 +6,7 @@ from live.constants import *
 from live.query import Query
 from .clip import ClipDetails
 
-class DetailClip:
+class DetailClip():
     """
     A class representing a single detail clip in a Live set.
     """
