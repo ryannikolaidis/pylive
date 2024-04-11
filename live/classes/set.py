@@ -67,7 +67,7 @@ class Set:
         # time they are requested. Increases efficiency in cases where no other
         # processes are going to modify Live's state.
         # --------------------------------------------------------------------------
-        self.caching = False
+        self.caching = True
 
         # --------------------------------------------------------------------------
         # For batch queries, limit the max number of tracks to query.
@@ -130,6 +130,7 @@ class Set:
                          This is slower, but can be used if Live is on a different computer.
                   "auto" uses "file" for a local install, and "network" for a remote instance.
         """
+        print("Scanning set")
 
         if mode == "auto" or mode == "local":
             self._scan_via_file()

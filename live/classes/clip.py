@@ -24,8 +24,8 @@ class ClipDetails:
     length: int
     signature_numerator: int
     signature_denominator: int
-    start_time: float
-    end_time: float
+    start_marker: float
+    end_marker: float
     loop_start: float
     loop_end: float
 
@@ -152,6 +152,34 @@ class Clip:
             mute: If True, mutes the note.
         """
         self.live.cmd("/live/clip/add/notes", (self.track.index, self.index, pitch, start_time, duration, velocity, mute))
+
+    name = property(fget=make_getter("clip", "name"),
+                    fset=make_setter("clip", "name"),
+                    doc="Name of the clip")
+
+    signature_numerator = property(fget=make_getter("clip", "signature_numerator"),
+                                   fset=make_setter("clip", "signature_numerator"),
+                                   doc="Time signature numerator")
+
+    signature_denominator = property(fget=make_getter("clip", "signature_denominator"),
+                                     fset=make_setter("clip", "signature_denominator"),
+                                     doc="Time signature denominator")
+
+    start_marker = property(fget=make_getter("clip", "start_marker"),
+                            fset=make_setter("clip", "start_marker"),
+                            doc="Start marker in beats")
+
+    end_marker = property(fget=make_getter("clip", "end_marker"),
+                          fset=make_setter("clip", "end_marker"),
+                          doc="End marker in beats")
+
+    loop_start = property(fget=make_getter("clip", "loop_start"),
+                          fset=make_setter("clip", "loop_start"),
+                          doc="Loop start time in beats")
+
+    loop_end = property(fget=make_getter("clip", "loop_end"),
+                        fset=make_setter("clip", "loop_end"),
+                        doc="Loop end time in beats")
 
     pitch_coarse = property(fget=make_getter("clip", "pitch_coarse"),
                             fset=make_setter("clip", "pitch_coarse"),
