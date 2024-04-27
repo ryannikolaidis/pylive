@@ -12,7 +12,7 @@ class DetailClip():
     """
 
     @classmethod
-    def get_details(self) -> ClipDetails:
+    def fetch_details(self) -> ClipDetails:
         """
         Return details about the clip.
         """
