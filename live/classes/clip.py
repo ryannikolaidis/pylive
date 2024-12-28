@@ -5,6 +5,8 @@ import live.object
 from live.constants import *
 from live.query import Query
 
+import typing as t
+
 def make_getter(class_identifier, prop):
     def fn(self):
         return self.live.query("/live/%s/get/%s" % (class_identifier, prop), (self.track.index, self.index,))[2]
@@ -22,12 +24,22 @@ from dataclasses import dataclass
 class ClipDetails:
     name: str
     length: int
-    signature_numerator: int
-    signature_denominator: int
-    start_marker: float
-    end_marker: float
-    loop_start: float
-    loop_end: float
+    signature_numerator: t.Optional[int] = 4
+    signature_denominator: t.Optional[int] = 4
+    start_marker: t.Optional[float] = None
+    end_marker: t.Optional[float] = None
+    loop_start: t.Optional[float] = None
+    loop_end: t.Optional[float] = None
+
+    def __init__(self, name: str, length: int, signature_numerator: t.Optional[int] = 4, signature_denominator: t.Optional[int] = 4, start_marker: t.Optional[float] = 0, end_marker: t.Optional[float] = None, loop_start: t.Optional[float] = 0, loop_end: t.Optional[float] = None):
+        self.name = name
+        self.length = length
+        self.signature_numerator = signature_numerator
+        self.signature_denominator = signature_denominator
+        self.start_marker = start_marker
+        self.end_marker = self.length if end_marker is None else end_marker
+        self.loop_start = loop_start
+        self.loop_end = self.length if loop_end is None else loop_end
 
 class Clip:
     """
