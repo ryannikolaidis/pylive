@@ -22,8 +22,8 @@ from dataclasses import dataclass
 
 @dataclass
 class ClipDetails:
-    name: str
-    length: int
+    name: str = ""
+    length: int = 4
     signature_numerator: t.Optional[int] = 4
     signature_denominator: t.Optional[int] = 4
     start_marker: t.Optional[float] = None
@@ -31,7 +31,7 @@ class ClipDetails:
     loop_start: t.Optional[float] = None
     loop_end: t.Optional[float] = None
 
-    def __init__(self, name: str, length: int, signature_numerator: t.Optional[int] = 4, signature_denominator: t.Optional[int] = 4, start_marker: t.Optional[float] = 0, end_marker: t.Optional[float] = None, loop_start: t.Optional[float] = 0, loop_end: t.Optional[float] = None):
+    def __init__(self, name: str = "", length: int = 4, signature_numerator: t.Optional[int] = 4, signature_denominator: t.Optional[int] = 4, start_marker: t.Optional[float] = 0, end_marker: t.Optional[float] = None, loop_start: t.Optional[float] = 0, loop_end: t.Optional[float] = None):
         self.name = name
         self.length = length
         self.signature_numerator = signature_numerator
